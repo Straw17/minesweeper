@@ -50,8 +50,9 @@ class Tile:
 	
 	def adjacentMines(self):
 		self.adjacentMines = 0
-		for tile in self.neighbors():
-			if self.tileNeighbors[tile] in mineList:
+		neighbors = self.neighbors()
+		for tile in range(len(neighbors)):
+			if neighbors[tile] in self.mineList:
 				self.adjacentMines += 1
 		return self.adjacentMines
 	
@@ -59,7 +60,7 @@ class Tile:
 		self.tileNeighbors = []
 		for xValue in range(-1, 2):
 			for yValue in range(-1, 2):
-				if xValue + coordinates[0] >= 0 and xValue + coordinates[0] <= xRange and yValue + coordinates[1] >= 0 and yValue + coordinates[1] <= yRange and [xValue, yValue] != [x, y]:
+				if xValue + self.coordinates[0] >= 0 and xValue + self.coordinates[0] <= xRange and yValue + self.coordinates[1] >= 0 and yValue + self.coordinates[1] <= yRange and [xValue, yValue] != self.coordinates:
 					self.tileNeighbors.append([xValue, yValue])
 		return self.tileNeighbors
 	
@@ -73,7 +74,7 @@ class Board(tk.Frame):
 	def tileReveal(self, tile):
 		adjacentMines = tile.adjacentMines()
 		neighbors = tile.neighbors()
-		self.buttonBoard[tile.y][tile.x][text] = str(adjacentMines)
+		self.buttonBoard[tile.coordinates[1]][tile.coordinates[0]][text] = str(adjacentMines)
 		print(neighbors)
 		
 	def buttonPress(self, event):
